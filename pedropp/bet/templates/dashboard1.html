@@ -1,0 +1,103 @@
+{% extends "layout1.html" %}
+
+
+
+{% block content %}
+
+{% set cuenta1 = cuenta[1]  %}
+
+<div class="columns">
+		<div class="column">
+				<!--<h1>Esto es un dashboard de administracion <strong id="cool">{{user}}</strong></h1>-->
+
+		</div>
+</div>
+<div class="colums">
+
+		<div class="column is-7">
+				<div class="box">
+						<div class="tags has-addons" id="tags">
+								<div class="tag is-primary">Total de Clientes: <div id="total">{{ cuenta[0] }}</div></div>
+								<i class="fas fa-fw">&nbsp</i>
+								<div class="tag is-link">Conectados: <div id="conect">{{ cuenta[1] }}</div></div>
+								<div class="tag is-link">Desconectados: <div id="desc">{{ cuenta[2] }}</div></div>
+								<i class="fas fa-fw">&nbsp</i>
+								<div class="tag is-link">Activos: <div id="activ">{{ cuenta[3] }}</div></div>
+								<div class="tag is-link">Inactivos: <div id="inact">{{ cuenta[4] }}</div></div>
+								<i class="fas fa-fw">&nbsp</i>
+								<div class="tag is-link">Al Dia: <div id="aldia">{{ cuenta[5] }}</div></div>
+								<div class="tag is-link">Morosos: <div id="moros">{{ cuenta[6] }}</div></div>
+
+
+						</div>
+
+				</div>
+		</div>
+</div>
+
+
+<!-- tabs-->
+<div class="tabs is-centered is-fullwidth">
+  <ul id="tabs">
+    <li class="tab is-active" onclick="openTab(event, 'clientes')"><a>Clientes</a></li>
+    <li class="tab" onclick="openTab(event, 'recargas')"><a>Recargas</a></li>
+    <li class="tab" onclick="openTab(event, 'netflix')"><a>Netflix</a></li>
+    <li class="tab" onclick="openTab(event, 'administracion')"><a>Administracion</a></li>
+  </ul>
+</div>
+
+<!--fin del tabs-->
+
+
+
+
+<div class="columns">
+		<div class="column">
+
+				<!-- contenido1-->
+				<div id ="clientes"class="box is-active content-tab" style="box-color:40,30%,20% display:block"><strong>Clientes:</strong>
+						<div class="" id="client"><br>
+								{% include "lista.html" %}
+								{% block lista %}
+								{% endblock%}
+						</div>
+						</div>
+
+
+						<!-- contenido2 -->
+
+				<div id="recargas" class="box content-tab" style="display:none"><br>
+						<strong>Ordenes:</strong>
+						<div class=""></div><br>
+
+						</div>
+
+						<!-- contenido3 -->
+
+				<div id="netflix" class="box content-tab"style="display:none"><br>
+						<strong>Cuentas:</strong>
+						<div></div><br>
+
+						</div>
+
+						
+						<!-- contenido4 -->
+
+				<div id="administracion" class="box content-tab"style="display:none"><br>
+						<strong>Suspensiones:</strong>
+						<div></div><br>
+
+				</div><br>
+
+
+
+
+		</div>
+		</div>
+
+<script src="{{ url_for('static', filename='js/java.js' )}}"></script>
+<script>
+		actu();
+</script>
+										
+				{% endblock %}

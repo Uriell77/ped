@@ -1,0 +1,38 @@
+{% extends 'layout.html' %} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<div class="collumns is-one-third is-centered">
+    <div class="collumn is-half">
+        <!--<h1>ESTO ES UN LOGIN</h1>-->
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-half">
+                    <div class="card card-shadow is-rounded">
+                        <div class="card-content" align="center">
+                            <form method="post" class="" id="log">
+
+                                <label class="label" for="name">Nombre:&nbsp&nbsp</label>
+                                <input type="text" id="nombre" name="nombre" class="input is-primary"><br><br>
+                                <label class="label" for="password">Password:</label>
+                                <input type="password" id="password" name="password" class="input is-primary"><br><br>
+
+
+                                <input type="submit" value="Entrar" class="button is-primary" id="entrar"></input>
+                                <input type="submit" value="Cancelar" class="button is-primary"></input>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/java.js' )}}"></script>
+<script>
+
+</script>
+    {% endblock %}
