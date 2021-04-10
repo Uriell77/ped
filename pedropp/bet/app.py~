@@ -8,6 +8,7 @@
 
 from flask import Flask, escape, request, render_template, url_for, redirect, flash, session, jsonify
 import flask_wtf as wtf
+from datetime import timedelta
 import bd
 
 app = Flask(__name__)
@@ -19,6 +20,7 @@ fallas = {'nolog':'Usuario no esta Logueado', 'noacces':'Usuario sin acceso a es
 @app.before_request
 def session_manager():
     session.permanent = True
+    #app.permanent_session_lifetime = timedelta(minutes=10)
 
 
 @app.route('/')
@@ -119,7 +121,22 @@ def dash(user):
 @app.route('/recargas', methods=['GET', 'POST'])
 def rec(user):
     if session['auth'] == 1 and  session['name'] == user:
-        return render_template('recargas.html', user=user)
+        if request.args.get('numero')!= None:
+            empresa = request.args.get('empresa')
+            numero = request.args.get('numero')
+            monto = request.args.get('monto')
+            rec = "{},{},{}".format(empresa,numero,monto)
+            ide = bd.leer(user)[0]
+            try:
+                bd.recarga(ide, rec)
+                flash('recarga realizada')
+                return redirect(url_for('rec', user=user))
+            except:
+                flash('Recarga Fallida')
+                return redirect(url_for('rec', use=user))
+        else:
+            return render_template('recargas.html', user=user)
+
     else:
         return render_template('fail.html', error=fallas['nolog'])
 
@@ -135,13 +152,14 @@ def doc():
 def layad(user):
     cuenta = bd.counteo()
     plantilla = bd.leertodo()
+    lorden = bd.todarecarga()
     if user != plantilla[0][1]:
         return render_template('fail.html', error=fallas['noacces'])
     else:
         if session['auth'] == 1 and session['name'] == str(plantilla[0][1]):
             #flash('Bienvvenido')
 
-            return render_template('dashboard1.html', user=user, plantilla=plantilla, cuenta=cuenta)
+            return render_template('dashboard1.html', user=user, plantilla=plantilla, cuenta=cuenta, lorden=lorden)
         else:
             return render_template('fail.html', error=fallas['noacces'])
 
@@ -175,7 +193,11 @@ def json():
         return jsonify(datos)
     elif datos == 'cuenta':
             datos = bd.counteo()
-    return jsonify(datos)
+            return jsonify(datos)
+    elif datos == 'rec':
+        datos = bd.todarecarca()
+        return jsonify(datos)
+    return "Api de datos"
 
 
 
@@ -183,9 +205,14 @@ def json():
 @app.route('/lista')
 def lista():
     plantilla = bd.leertodo()
+    lorden = bd.todarecarca()
     return render_template('lista.html', plantilla = plantilla)
 
 
+@app.route('/ordenes')
+def ordenes():
+    lorden = bd.todarecarga()
+    return render_template('ordenes.html', lorden=lorden)
 
 
 if __name__ == '__main__':

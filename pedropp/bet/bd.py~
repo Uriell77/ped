@@ -155,11 +155,5 @@ def todarecarga():
     return respuesta
 
 
-def delrec(fech):
+def delrec():
     #borra un registo de la base de datos recargas por la fecha
-    base = sqlite3.connect('user.db', check_same_thread=False)
-    cursor = base.cursor()
-
-    cursor.execute("DELETE FROM recargas WHERE fecha = {}".format(fech))
-    base.commit()
-    base.close()

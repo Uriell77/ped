@@ -33,16 +33,25 @@ document.addEventListener('DOMContentLoaded', () => {
     var boton2 = document.getElementById('boton2');
     var boton3 = document.getElementById('boton3');
     var ventana = document.getElementById('modal1');
+    var title = document.getElementById('modtitle');
+    var empresa = document.getElementById('empresa')
     boton1.onclick = function() {
         ventana.classList.toggle('is-active');
+        title.innerHTML = "Recarga Movilnet";
+        empresa.value = "movilnet";
+
 
     };
     boton2.onclick = function() {
         ventana.classList.toggle('is-active');
+        title.innerHTML = "Recarga Movistar";
+        empresa.value = "movistar";
 
     };
     boton3.onclick = function() {
         ventana.classList.toggle('is-active');
+        title.innerHTML = "Recarga Digitel";
+        empresa.value = "digitel";
 
     };
 
@@ -121,8 +130,10 @@ function loadDoc(div, page) {
                 &nbsp${item[1]}&nbsp&nbsp&nbspSaldo:` + ' ' + item[6].toFixed(1) +
                     `</div>
                 <div class="card-content">
-               Email: ${item[2]}<br>Conexion: ${item[4]}<br>Estatus: ${item[5]}
-               </div>
+                Email: ${item[2]}<br>Conexion: ${item[4]}<br>Estatus: ${item[5]}
+                </div>
+                </div>
+
                </div><br>`;
                 conectado();
             }
@@ -144,7 +155,7 @@ function loadDoccont(div, page) {
             var content = JSON.parse(this.responseText)
             document.getElementById(div).innerHTML = '';
             //for (let item of content.slice(0)) {
-            document.getElementById(div).innerHTML = `<div class="tag is-primary">Total de Clientes: <div id="total">${content[0]}</div></div>
+            document.getElementById(div).innerHTML = `<div class="tag is-primary">Total de Clientes: <div id="total"> ${content[0]}</div></div>
                 <i class="fas fa-fw">&nbsp</i>
                 <div class="tag is-link">Conectados: <div id="conect">${content[1]}</div></div>
                 <div class="tag is-link">Desconectados: <div id="desc">${content[2]}</div></div>
@@ -218,3 +229,10 @@ function actu() {
         };
     });
 };
+
+
+
+var ClickCard = document.getElementById('recLuis');
+ClickCard.addEventListener('click', function() {
+    console.log(ClickCard.children);
+});

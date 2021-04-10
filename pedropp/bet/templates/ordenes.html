@@ -1,0 +1,24 @@
+{% block ordenes %}
+
+<div id="todosorden">
+		{% for j in lorden %}
+
+		<div class="card has-background-dark has-text-light" id='rec{{ j[1]}}'>
+				<div class="card-header has-background-link">
+						&nbsp{{j[1]}}&nbsp&nbsp&nbsp
+				</div>
+				<div class="card-content">
+						{% set ord = j[3].split(',') %}
+						Fecha: {{j[2][:j[2].index('.')]}}<br>Orden:<br>&nbsp&nbsp&nbsp
+						Empresa: {{ord[0]}}<br>&nbsp&nbsp&nbspNumero: {{ord[1]}}<br>&nbsp&nbsp&nbspMonto: {{ord[2]}}
+				</div>
+		</div><br>
+
+		{%endfor%}
+</div>
+
+
+<script src="{{url_for('static', filename='js/java.js')}}">
+
+</script>
+{% endblock %}

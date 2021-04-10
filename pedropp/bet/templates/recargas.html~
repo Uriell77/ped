@@ -31,7 +31,7 @@
 
 														<footer class="modal-card-foot">
 										<input class="button is-success" type="submit" value="Recargar"></input>
-										<button class="button" id="cancel" type="button">Cancelar</button>
+										<button class="button" id="cancel">Cancelar</button>
 								</footer>
 
 												</form>

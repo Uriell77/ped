@@ -17,7 +17,7 @@
 		<div class="column is-7">
 				<div class="box">
 						<div class="tags has-addons" id="tags">
-								<div class="tag is-primary">Total de Clientes: <div id="total">{{ cuenta[0] }}</div></div>
+								<div class="tag is-primary">Total de Clientes: <div id="total"> {{ cuenta[0] }}</div></div>
 								<i class="fas fa-fw">&nbsp</i>
 								<div class="tag is-link">Conectados: <div id="conect">{{ cuenta[1] }}</div></div>
 								<div class="tag is-link">Desconectados: <div id="desc">{{ cuenta[2] }}</div></div>
@@ -65,16 +65,19 @@
 
 
 						<!-- contenido2 -->
-
-				<div id="recargas" class="box content-tab" style="display:none"><br>
+				<div id="recargas" class="box content-tab" style="display:none">
 						<strong>Ordenes:</strong>
-						<div class=""></div><br>
+						<div class="" id="ordene"><br>
+								{% include "ordenes.html" %}
+								{% block ordenes %}
+								{% endblock %}
 
+						</div>
 						</div>
 
 						<!-- contenido3 -->
 
-				<div id="netflix" class="box content-tab"style="display:none"><br>
+				<div id="netflix" class="box content-tab"style="display:none">
 						<strong>Cuentas:</strong>
 						<div></div><br>
 
@@ -83,7 +86,7 @@
 						
 						<!-- contenido4 -->
 
-				<div id="administracion" class="box content-tab"style="display:none"><br>
+				<div id="administracion" class="box content-tab"style="display:none">
 						<strong>Suspensiones:</strong>
 						<div></div><br>
 

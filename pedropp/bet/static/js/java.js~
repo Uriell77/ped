@@ -107,17 +107,61 @@ function openTab(evt, tabName) {
 
 
 
-//Ajax
+//Ajax carga listado de usuarios
 function loadDoc(div, page) {
-
+    //console.log('se ejecuta');
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            document.getElementById(div).innerHTML =
-                this.responseText;
-				
+            var content = JSON.parse(this.responseText)
+            document.getElementById(div).innerHTML = '';
+            for (let item of content.slice(1)) {
+                document.getElementById(div).innerHTML += ` <div class="card has-background-dark has-text-light" id='${item[1]}'>
+                <div class="card-header has-background-link">
+                &nbsp${item[1]}&nbsp&nbsp&nbspSaldo:` + ' ' + item[6].toFixed(1) +
+                    `</div>
+                <div class="card-content">
+                Email: ${item[2]}<br>Conexion: ${item[4]}<br>Estatus: ${item[5]}
+                </div>
+                </div>
+
+               </div><br>`;
+                conectado();
+            }
+            //document.getElementById(div).innerHTML = ;
         }
     };
+    xhttp.open("GET", page, true);
+    xhttp.send();
+};
+
+
+
+//Ajax carga el conteo de usuarios
+function loadDoccont(div, page) {
+    //console.log('se ejecuta');
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var content = JSON.parse(this.responseText)
+            document.getElementById(div).innerHTML = '';
+            //for (let item of content.slice(0)) {
+            document.getElementById(div).innerHTML = `<div class="tag is-primary">Total de Clientes: <div id="total"> ${content[0]}</div></div>
+                <i class="fas fa-fw">&nbsp</i>
+                <div class="tag is-link">Conectados: <div id="conect">${content[1]}</div></div>
+                <div class="tag is-link">Desconectados: <div id="desc">${content[2]}</div></div>
+                <i class="fas fa-fw">&nbsp</i>
+                <div class="tag is-link">Activos: <div id="activ">${content[3]}</div></div>
+                <div class="tag is-link">Inactivos: <div id="inact">${content[4]}</div></div>
+                <i class="fas fa-fw">&nbsp</i>
+                <div class="tag is-link">Al Dia: <div id="aldia">${content[5]}</div></div>
+                <div class="tag is-link">Morosos: <div id="moros">${content[6]}</div></div>
+
+`;
+        }
+        //document.getElementById(div).innerHTML = ;
+    }
+
     xhttp.open("GET", page, true);
     xhttp.send();
 };
@@ -149,14 +193,30 @@ function borrado() {
 
 //Usuario Conectado
 function conectado() {
-    document.addEventListener('DOMContentLoaded', () => {
-        var conectado = document.querySelectorAll('.card-content')
-        for (i = 0; i < conectado.length; i++) {
-            if (conectado[i].innerHTML.indexOf('Conectado') != -1) {
-                console.log(conectado[i].innerHTML);
-                conectado[i].classList.toggle('has-background-primary');
+    //console.log('aqui1');
+    var conectado = document.querySelectorAll('.card-content')
+        //console.log('aqui2')
+    for (i = 0; i < conectado.length; i++) {
+        if (conectado[i].innerHTML.indexOf('Conectado') != -1) {
+            //console.log(conectado[i].innerHTML);
+            conectado[i].classList.remove('has-background-link');
+            conectado[i].classList.add('has-background-primary');
+            conectado[i].classList.remove('has-text-light');
+            conectado[i].classList.add('has-text-black-bis');
+            //console.log('aqui tambien');
 
-            };
+        };
+    };
+};
+
+function actu() {
+    document.addEventListener('DOMContentLoaded', () => {
+        var btn = document.getElementById('entrar');
+        btn.onclick = function() {
+            var dive = document.getElementById('client');
+            var url = 'http://localhost:5000/api/datos/?datos=todo';
+
+            loadDoc(dive, url);
         };
     });
 };
