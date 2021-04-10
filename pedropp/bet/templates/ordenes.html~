@@ -3,7 +3,7 @@
 <div id="todosorden">
 		{% for j in lorden %}
 
-		<div class="card has-background-dark has-text-light" id='rec{{ j[1]}}' onclick="ClickCard()">
+		<div class="card has-background-dark has-text-light" id='rec{{ j[1]}}' onclick="ClickCard(this.id)">
 				<div class="card-header has-background-link">
 						&nbsp{{j[1]}}&nbsp&nbsp&nbsp
 				</div>
