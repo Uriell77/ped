@@ -231,8 +231,8 @@ function actu() {
 };
 
 
-
-var ClickCard = document.getElementById('recLuis');
-ClickCard.addEventListener('click', function() {
-    console.log(ClickCard.children);
-});
+function ClickCard(ident) {
+    var ClickCard = document.getElementById(ident);
+    console.log(ClickCard.children[0].innerText);
+    console.log(ClickCard.children[1].innerText);
+};
