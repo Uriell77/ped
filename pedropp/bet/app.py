@@ -47,7 +47,7 @@ def log():
         session.clear()
         session['name'] = nombre
         session['auth'] = 0
-        
+
         if nombre =="" or password =="":
             flash("No hay datos")
             return render_template('login.html')
@@ -127,13 +127,23 @@ def rec(user):
             monto = request.args.get('monto')
             rec = "{},{},{}".format(empresa,numero,monto)
             ide = bd.leer(user)[0]
-            try:
-                bd.recarga(ide, rec)
-                flash('recarga realizada')
+            saldo = bd.leer(user)[6]
+            data = bd.leer(ide)
+            data = list(data)
+            if float(monto) <= float(saldo):
+                try:
+                    bd.recarga(ide, rec)
+                    data[6] = float(data[6]) - float(monto)
+                    data = tuple(data)
+                    bd.editar(ide, data)
+                    flash('recarga realizada')
+                    return redirect(url_for('rec', user=user))
+                except:
+                    flash('Recarga Fallida')
+                    return redirect(url_for('rec', user=user))
+            else:
+                flash('Saldo Insuficiente')
                 return redirect(url_for('rec', user=user))
-            except:
-                flash('Recarga Fallida')
-                return redirect(url_for('rec', use=user))
         else:
             return render_template('recargas.html', user=user)
 
@@ -158,6 +168,17 @@ def layad(user):
     else:
         if session['auth'] == 1 and session['name'] == str(plantilla[0][1]):
             #flash('Bienvvenido')
+            if request.method == 'POST' and request.form['ider']!='None':
+                ider = request.form['ider']
+                fecha = request.form['fecha']
+                ider = ider.rstrip()
+                bd.delrec(ider, fecha)
+
+                flash('Recarga  {0} {1} Aprobada'.format(ider, fecha))
+                return render_template('dashboard1.html', user=user, plantilla=plantilla, cuenta=cuenta, lorden=lorden)
+            else:
+                #flash('nada')
+                return render_template('dashboard1.html', user=user, plantilla=plantilla, cuenta=cuenta, lorden=lorden)
 
             return render_template('dashboard1.html', user=user, plantilla=plantilla, cuenta=cuenta, lorden=lorden)
         else:
@@ -192,10 +213,10 @@ def json():
         datos = bd.leertodo()
         return jsonify(datos)
     elif datos == 'cuenta':
-            datos = bd.counteo()
-            return jsonify(datos)
+        datos = bd.counteo()
+        return jsonify(datos)
     elif datos == 'rec':
-        datos = bd.todarecarca()
+        datos = bd.todarecarga()
         return jsonify(datos)
     return "Api de datos"
 
@@ -209,10 +230,16 @@ def lista():
     return render_template('lista.html', plantilla = plantilla)
 
 
-@app.route('/ordenes')
+@app.route('/ordenes', methods=['GET', 'POST'])
 def ordenes():
-    lorden = bd.todarecarga()
-    return render_template('ordenes.html', lorden=lorden)
+    if request.method == 'GET':
+        lorden = bd.todarecarga()
+        return render_template('ordenes.html', lorden=lorden)
+    #else:
+     #   lorden = bd.todarecarga()
+      #  ider = request.form['ider']
+       # fecha = request.form['fecha']
+        #return ider,fecha
 
 
 if __name__ == '__main__':

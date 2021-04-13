@@ -23,15 +23,15 @@
 														<div class="block">
 
 														<div><label class="label" for="">Numero:<br>
-																		<input class="input is-primary" type="text" name="numero"></label></div>
+																		<input class="input is-primary" type="tel" name="numero"></label></div>
 														<div><label class="label" for="">Monto:<br>
-																		<input class="input is-primary" type="text" name="monto"></label></div>
+																		<input class="input is-primary" type="number" name="monto" pattern="[0-9]{3}.[0-9]{3}"></label></div>
 																										<input class="input is-primary" type="text" id="empresa" name="empresa" style="display: none">
 														
 
 														<footer class="modal-card-foot">
 										<input class="button is-success" type="submit" value="Recargar"></input>
-										<button class="button" id="cancel">Cancelar</button>
+										<button class="button" id="cancel" type="button">Cancelar</button>
 								</footer>
 
 												</form>
