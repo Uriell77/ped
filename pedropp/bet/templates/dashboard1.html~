@@ -39,7 +39,7 @@
 <!-- tabs-->
 <div class="tabs is-centered is-fullwidth">
   <ul id="tabs">
-    <li class="tab is-active" onclick="openTab(event, 'clientes')"><a>Clientes</a></li>
+    <li class="tab is-active" onclick="openTab(event, 'clientes')"><a>Clientes <canvas id="micanvas" width="10" height="10" style="background: red"></canvas></a></li>
     <li class="tab" onclick="openTab(event, 'recargas')"><a>Recargas</a></li>
     <li class="tab" onclick="openTab(event, 'netflix')"><a>Netflix</a></li>
     <li class="tab" onclick="openTab(event, 'administracion')"><a>Administracion</a></li>
@@ -67,7 +67,7 @@
 						<!-- contenido2 -->
 				<div id="recargas" class="box content-tab" style="display:none">
 						<strong>Ordenes:</strong>
-						<div class="" id="ordenes"><br>
+						<div class="" id="ordene"><br>
 								{% include "ordenes.html" %}
 								{% block ordenes %}
 								{% endblock %}

@@ -119,7 +119,7 @@ def recarga(id, ordenu):
 
     datosu = leer(id)
     time = str(datetime.datetime.now())
-    cursor.execute("INSERT INTO recargas(id,nombre,time,orden) VALUES ('{0}', '{1}', '{2}', '{3}')".format(datosu[0], datosu[1], time, ordenu))
+    cursor.execute("INSERT INTO recargas(id,nombre,time,orden) VALUES ('{0}', '{1}', '{2}', '{3}')".format(datosu[0], datosu[1], time[:time.index('.')], ordenu))
     base.commit()
     base.close()
 
@@ -155,11 +155,10 @@ def todarecarga():
     return respuesta
 
 
-def delrec(fech):
+def delrec(ide, fech):
     #borra un registo de la base de datos recargas por la fecha
     base = sqlite3.connect('user.db', check_same_thread=False)
     cursor = base.cursor()
-
-    cursor.execute("DELETE FROM recargas WHERE fecha = {}".format(fech))
+    cursor.execute("UPDATE recargas SET status = '{2}' WHERE nombre = '{0}' AND time = '{1}'".format(ide, fech, '1'))
     base.commit()
     base.close()

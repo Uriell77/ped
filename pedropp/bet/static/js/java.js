@@ -226,6 +226,7 @@ function actu() {
             var url = 'http://localhost:5000/api/datos/?datos=todo';
 
             loadDoc(dive, url);
+            todos();
         };
     });
 };
@@ -233,6 +234,67 @@ function actu() {
 
 function ClickCard(ident) {
     var ClickCard = document.getElementById(ident);
-    console.log(ClickCard.children[0].innerText);
-    console.log(ClickCard.children[1].innerText);
+    var ventana = document.getElementById('modal1');
+    ventana.classList.toggle('is-active');
+    var nom = ClickCard.children[0].innerText;
+    var reca = ClickCard.children[1].innerText.split("\n");
+    var ider = document.getElementById('ider');
+    var fecha = document.getElementById('fecha');
+    ventana.childNodes[3].childNodes[3].innerHTML = `<div>${nom}</div>
+    <div>${reca[0]}</div>
+    <div>${reca[1]}</div>
+    <div>${reca[2]}</div>
+    <div>${reca[3]}</div>
+    <div>${reca[4]}</div>`;
+    ider.value = nom.slice(1);
+    fecha.value = reca[0].slice(7);
+    //console.log(ventana.childNodes[3].childNodes[3])
+
+};
+
+//Ajax carga listado de recargas
+function loadrec(div, page) {
+    //console.log('se ejecuta');
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var content = JSON.parse(this.responseText)
+            document.getElementById(div).innerHTML = '';
+            for (item of content) {
+                if (item[4] == 0) {
+                    var ord = item[3].split(',');
+                    document.getElementById(div).innerHTML += `<div class="card has-background-dark has-text-light" id="rec${ item[1]}" onclick="ClickCard(this.id)
+                "><div class="card-header has-background-link">&nbsp${item[1]}</div><div class="card-content">
+                    Fecha: ${item[2]}<br>Orden:<br>&nbsp&nbsp&nbsp
+                                     Empresa: ${ord[0]}<br>&nbsp&nbsp&nbspNumero: ${ord[1]}<br>&nbsp&nbsp&nbspMonto:
+                ${ord[2]}
+                             </div>
+                      </div><br>
+             </div>`
+                };
+            }
+            //document.getElementById(div).innerHTML = ;
+        }
+    };
+    xhttp.open("GET", page, true);
+    xhttp.send();
+};
+
+function limpiar() {
+    var ider = document.getElementById('ider');
+    var fecha = document.getElementById('fecha');
+    ider.value = '';
+    fecha.value = '';
+
+}
+
+
+function todos() {
+    loadrec('todosorden', 'http://localhost:5000/api/datos/?datos=rec');
+    conectado();
+    //loadrec('todosorden', 'http://uriell77.pythonanywhere.com/api/datos/?datos=rec');
+    //loadDoc('todos', 'http://uriell77.pythonanywhere.com/api/datos/?datos=todo');
+    //loadDoccont('tags', 'http://uriell77.pythonanywhere.com/api/datos/?datos=cuenta');
+    loadDoc('todos', 'http://localhost:5000/api/datos/?datos=todo');
+    loadDoccont('tags', 'http://localhost:5000/api/datos/?datos=cuenta');
 };
