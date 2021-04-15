@@ -14,11 +14,11 @@
     <title>{% block title %}Netflix Betmar {% endblock %}</title>
 </head>
 
-<body class="has-background-grey-light text-center" style="padding:2px">
+<body class="has-background-grey-light text-center" style="padding:2px height:100%">
     <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
             <a class="title" href="">Netflix Betmar</a>
-            </a>
+			
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
@@ -39,6 +39,7 @@
 
             </div>
             <div class="navbar-end">
+					<div class="navbar-item">Saldo: {{saldo}}</div>
                 <div class="navbar-item">
                     <!-- boton desplegable-->
                     <div class="dropdown is-left" id="desplegable">

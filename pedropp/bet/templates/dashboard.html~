@@ -7,6 +7,7 @@
 						<div class="collumn">
 								<!--<h1>Esto es un dashboard <strong>{{user}}</strong></h1>-->
 
+								<div class="box">{{user}} <span class="is-pulled-right">Saldo: {{saldo}}</span></div>
 								<div class="box">Nuestros Servicios</div>
 								<div class="box">Historial</div>
 

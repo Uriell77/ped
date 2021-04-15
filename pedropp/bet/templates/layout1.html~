@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <!-- Required meta tags -->
@@ -14,11 +14,11 @@
     <title>{% block title %}Netflix Betmar {% endblock %}</title>
 </head>
 
-<body class="has-background-grey-light text-center" style="padding:2px">
+<body class="has-background-grey-light text-center" style="padding:2px height:100%">
     <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
             <a class="title" href="">Netflix Betmar</a>
-            </a>
+			
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
@@ -36,6 +36,7 @@
                 <a class="navbar-item" href="{{url_for('rec', user=user)}}">
 												Recargas
 										</a>
+										<a class="navbar-end" href="#">Saldo: {{saldo}}</a>
 
             </div>
             <div class="navbar-end">

@@ -109,10 +109,11 @@ def dash(user):
         return render_template('fail.html', error=fallas['noacces'])
     else:
         if session['auth'] == 1 and session['name'] == user:
+            data = bd.leer(user)
             #enrutado a dashboard
             #flash('Bienvenido')
 
-            return render_template('dashboard.html', user=user)
+            return render_template('dashboard.html', user=user, saldo=data[6]) 
         else:
             return render_template('fail.html', error = fallas['nolog'])
 
@@ -120,6 +121,7 @@ def dash(user):
 @app.route('/recargas/<user>', methods=['GET', 'POST'])
 @app.route('/recargas', methods=['GET', 'POST'])
 def rec(user):
+    saldo = bd.leer(user)[6]
     if session['auth'] == 1 and  session['name'] == user:
         if request.args.get('numero')!= None:
             empresa = request.args.get('empresa')
@@ -137,15 +139,15 @@ def rec(user):
                     data = tuple(data)
                     bd.editar(ide, data)
                     flash('recarga realizada')
-                    return redirect(url_for('rec', user=user))
+                    return redirect(url_for('rec', user=user, saldo=saldo))
                 except:
                     flash('Recarga Fallida')
-                    return redirect(url_for('rec', user=user))
+                    return redirect(url_for('rec', user=user, saldo=saldo))
             else:
                 flash('Saldo Insuficiente')
-                return redirect(url_for('rec', user=user))
+                return redirect(url_for('rec', user=user, saldo=saldo))
         else:
-            return render_template('recargas.html', user=user)
+            return render_template('recargas.html', user=user, saldo=saldo)
 
     else:
         return render_template('fail.html', error=fallas['nolog'])
@@ -163,6 +165,7 @@ def layad(user):
     cuenta = bd.counteo()
     plantilla = bd.leertodo()
     lorden = bd.todarecarga()
+    data = bd.leer(user)
     if user != plantilla[0][1]:
         return render_template('fail.html', error=fallas['noacces'])
     else:
@@ -175,12 +178,12 @@ def layad(user):
                 bd.delrec(ider, fecha)
 
                 flash('Recarga  {0} {1} Aprobada'.format(ider, fecha))
-                return render_template('dashboard1.html', user=user, plantilla=plantilla, cuenta=cuenta, lorden=lorden)
+                return render_template('dashboard1.html', user=user, plantilla=plantilla, cuenta=cuenta, lorden=lorden, saldo=data[6])
             else:
                 #flash('nada')
-                return render_template('dashboard1.html', user=user, plantilla=plantilla, cuenta=cuenta, lorden=lorden)
+                return render_template('dashboard1.html', user=user, plantilla=plantilla, cuenta=cuenta, lorden=lorden, saldo=data[6])
 
-            return render_template('dashboard1.html', user=user, plantilla=plantilla, cuenta=cuenta, lorden=lorden)
+            return render_template('dashboard1.html', user=user, plantilla=plantilla, cuenta=cuenta, lorden=lorden, saldo=data[6])
         else:
             return render_template('fail.html', error=fallas['noacces'])
 
