@@ -4,7 +4,7 @@
 {%for i in plantilla[1:]%}
 <div class="card has-background-dark has-text-light" id='{{ i[1]}}'>
 		<div class="card-header has-background-link">
-				<span class="is-pulled-left">&nbsp{{i[1]}}</span><span class="is-pulled-right">Saldo: {{i[6]}}</span>
+				&nbsp{{i[1]}}&nbsp&nbsp&nbspSaldo: {{i[6]}}
 		</div>
 		<div class="card-content">
 				Email: {{i[2]}}<br>Conexion: {{i[4]}}<br>Estatus: {{i[5]}}
