@@ -6,7 +6,7 @@ background: linear-gradient(to top, #26a0da, #314755); /* W3C, IE 10+/ Edge, Fir
 }
 
 
-.navbar{
+navbar{
 		
 background: #314755;  /* fallback for old browsers */
 background: -webkit-linear-gradient(to top, #26a0da, #314755);  /* Chrome 10-25, Safari 5.1-6 */
