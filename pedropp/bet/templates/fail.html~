@@ -35,7 +35,7 @@
 								<article class="media">
 										<div class="media-content">
 										<figure class="image is-1by1">
-												<img src="{{url_for('static', filename="img/stop.jpg")}}">
+												<img src="{{url_for('static', filename="img/stop.jpeg")}}">
 										</figure>
 										</div>
 								</article>

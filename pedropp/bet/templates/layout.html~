@@ -24,7 +24,8 @@
 <body class="has-background-grey-light" height="100%" style="padding:2px">
     <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
-            <a class="title" href="{{url_for('hello')}}">Netflix Betmar</a>
+				<img src="{{ url_for('static', filename='img/favicon.ico')}}" style="height:4rem"></img>
+            <a class="title" href="{{url_for('hello')}}" style="color:red">Netflix Betmar</a>
             </a>
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
                 <span aria-hidden="true"></span>
@@ -68,12 +69,11 @@
 
     <script src="{{ url_for('static', filename='js/java.js' )}}"></script>
 
-
-
+<div style="height:30px"></div>
 <footer class="footer has-background-dark has-text-light">
   <div class="content has-text-centered">
     <p>
-      <h4>Netflix Betmar</h4> by <a href="https://jgthms.com">GP System Media & Games</a>. The source code is licensed
+      <strong class="has-text-light">Netflix Betmar</strong> by <a href="https://jgthms.com">GP System Media & Games</a>. The source code is licensed
       <a href="http://opensource.org/licenses/mit-license.php">copyright 2020</a>. The website content
       is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
     </p>

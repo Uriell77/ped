@@ -110,10 +110,11 @@ def dash(user):
     else:
         if session['auth'] == 1 and session['name'] == user:
             data = bd.leer(user)
+            histo = bd.ListaRecargas()
             #enrutado a dashboard
             #flash('Bienvenido')
 
-            return render_template('dashboard.html', user=user, saldo=data[6]) 
+            return render_template('dashboard.html', user=user, saldo=data[6], histo=histo) 
         else:
             return render_template('fail.html', error = fallas['nolog'])
 
@@ -121,6 +122,7 @@ def dash(user):
 @app.route('/recargas/<user>', methods=['GET', 'POST'])
 @app.route('/recargas', methods=['GET', 'POST'])
 def rec(user):
+    saldo = bd.leer(user)[6]
     if session['auth'] == 1 and  session['name'] == user:
         if request.args.get('numero')!= None:
             empresa = request.args.get('empresa')

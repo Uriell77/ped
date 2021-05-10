@@ -110,10 +110,11 @@ def dash(user):
     else:
         if session['auth'] == 1 and session['name'] == user:
             data = bd.leer(user)
+            histo = bd.ListaRecargas(data[0])
             #enrutado a dashboard
             #flash('Bienvenido')
 
-            return render_template('dashboard.html', user=user, saldo=data[6]) 
+            return render_template('dashboard.html', user=user, saldo=data[6], histo=histo) 
         else:
             return render_template('fail.html', error = fallas['nolog'])
 

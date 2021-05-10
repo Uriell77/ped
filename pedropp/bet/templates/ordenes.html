@@ -27,7 +27,7 @@
 		{% for j in lorden %}
 		{% if j[4] == 0 %}
 
-		<div class="card has-background-dark has-text-light" id='rec{{ j[1]}}' onclick="ClickCard(this.id)">
+		<div class="card has-background-dark has-text-light" id='{{j[2]}}' onclick="ClickCard(this.id, j)">
 				<div class="card-header has-background-link">
 						&nbsp{{j[1]}}&nbsp&nbsp&nbsp
 				</div>

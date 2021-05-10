@@ -24,8 +24,10 @@
 <body class="has-background-grey-light" height="100%" style="padding:2px">
     <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
-            <a class="title" href="{{url_for('hello')}}">Netflix Betmar</a>
-            </a>
+				<img src="{{ url_for('static', filename='img/favicon.ico')}}" style="height:4rem"></img>
+           <div style="padding-top:10px">
+		<a class="title" href="" style="color:red"><font face="Gabriola" size="16"><b>Netflix Betmar</b></font></a></div>
+			
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
@@ -68,8 +70,7 @@
 
     <script src="{{ url_for('static', filename='js/java.js' )}}"></script>
 
-
-
+<div style="height:30px"></div>
 <footer class="footer has-background-dark has-text-light">
   <div class="content has-text-centered">
     <p>
