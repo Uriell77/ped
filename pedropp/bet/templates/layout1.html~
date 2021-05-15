@@ -14,7 +14,7 @@
     <title>{% block title %}Netflix Betmar {% endblock %}</title>
 </head>
 
-<body class="has-background-grey-light text-center" style="padding:2px height:100%">
+<body class="has-background-grey-light text-center" style="padding:3px; height:100%">
     <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
 <img src="{{ url_for('static', filename='img/favicon.ico')}}" style="height:4rem"></img>
@@ -38,6 +38,11 @@
                 <a class="navbar-item" href="{{url_for('rec', user=user)}}">
 												Recargas
 										</a>
+
+ <a class="navbar-item" href="{{url_for('rec', user=user)}}">
+												Cuentas
+										</a>
+
 
             </div>
             <div class="navbar-end">

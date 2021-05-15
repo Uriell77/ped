@@ -29,9 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 //Botones de recarga
 document.addEventListener('DOMContentLoaded', () => {
-    var boton1 = document.getElementById('boton1');
-    var boton2 = document.getElementById('boton2');
-    var boton3 = document.getElementById('boton3');
+    var boton1 = document.getElementById('Movilnet');
+    var boton2 = document.getElementById('Movistar');
+    var boton3 = document.getElementById('Digitel');
     var ventana = document.getElementById('modal1');
     var title = document.getElementById('modtitle');
     var empresa = document.getElementById('empresa')
@@ -56,6 +56,40 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
 });
+
+
+
+
+//Botones de Cuentas
+document.addEventListener('DOMContentLoaded', () => {
+    var boton1 = document.getElementById('Netflix');
+    var boton2 = document.getElementById('Disney+');
+    var boton3 = document.getElementById('Amazon Prime');
+    var ventana = document.getElementById('modal1');
+    var title = document.getElementById('modtitle');
+    var empresa = document.getElementById('empresa')
+    boton1.onclick = function() {
+        ventana.classList.toggle('is-active');
+        title.innerHTML = "Cuentas Netflix";
+        empresa.value = "Netflix";
+
+
+    };
+    boton2.onclick = function() {
+        ventana.classList.toggle('is-active');
+        title.innerHTML = "Cuentas Disney+";
+        empresa.value = "Disney+";
+
+    };
+    boton3.onclick = function() {
+        ventana.classList.toggle('is-active');
+        title.innerHTML = "Cuentas Amazon Prime";
+        empresa.value = "Amazon Prime";
+
+    };
+
+});
+
 
 
 
@@ -289,13 +323,13 @@ function limpiar() {
 
 
 function todos() {
-    //loadrec('todosorden', 'http://localhost:5000/api/datos/?datos=rec');
-    //loadDoc('todos', 'http://localhost:5000/api/datos/?datos=todo');
-    //loadDoccont('tags', 'http://localhost:5000/api/datos/?datos=cuenta');
+    loadrec('todosorden', 'http://localhost:5000/api/datos/?datos=rec');
+    loadDoc('todos', 'http://localhost:5000/api/datos/?datos=todo');
+    loadDoccont('tags', 'http://localhost:5000/api/datos/?datos=cuenta');
     conectado();
 
-    loadrec('todosorden', 'http://uriell77.pythonanywhere.com/api/datos/?datos=rec');
-    loadDoc('todos', 'http://uriell77.pythonanywhere.com/api/datos/?datos=todo');
-    loadDoccont('tags', 'http://uriell77.pythonanywhere.com/api/datos/?datos=cuenta');
+    //loadrec('todosorden', 'http://uriell77.pythonanywhere.com/api/datos/?datos=rec');
+    //loadDoc('todos', 'http://uriell77.pythonanywhere.com/api/datos/?datos=todo');
+    //loadDoccont('tags', 'http://uriell77.pythonanywhere.com/api/datos/?datos=cuenta');
 
 };

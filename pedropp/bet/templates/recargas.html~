@@ -22,37 +22,84 @@
 												<form class="form" style="align:center" id="rec" method="GET">
 														<div class="block">
 
-														<div><label class="label" for="">Numero:<br>
-																		<input class="input is-primary" type="tel" name="numero"></label></div>
-														<div><label class="label" for="">Monto:<br>
-																		<input class="input is-primary" type="number" name="monto" pattern="[0-9]{3}.[0-9]{3}"></label></div>
-																										<input class="input is-primary" type="text" id="empresa" name="empresa" style="display: none">
-														
+																<div><label class="label" for="">Numero:<br>
+																				<input class="input is-primary" type="text" name="numero"></label></div>
+																<div><label class="label" for="">Monto:<br>
+																				<input class="input is-primary" type="text" name="monto"></label></div>
+																<input class="input is-primary" type="text" id="empresa" name="empresa" style="display: none">
 
-														<footer class="modal-card-foot">
-										<input class="button is-success" type="submit" value="Recargar"></input>
-										<button class="button" id="cancel" type="button">Cancelar</button>
-								</footer>
+
+																<footer class="modal-card-foot">
+																		<input class="button is-success" type="submit" value="Recargar"></input>
+																		<button class="button" id="cancel" type="button">Cancelar</button>
+																</footer>
 
 												</form>
-										</div>
-								</section>
 														</div>
-				</div>	
-		</div>
-		<br>
-		<section class="section">
-				<div class="columns">
-						<div class="column">
-								<button id="boton1" class="has-background-grey-light"><img src="{{url_for('static', filename='img/movilnet.png')}}"></button></div>
-						<div class="column">
-								<button id="boton2" class="has-background-grey-light"><img src="{{url_for('static', filename='img/movistar.png')}}"></button></div>
-						<div class="column">
-								<button id="boton3" class="has-background-grey-light"><img src="{{url_for('static', filename='img/digitel.png')}}"></button></div>
+								</section>
+										</div>
+						</div>	
 				</div>
+				<br>
+				<section class="section">
+						<div class="columns">
+								<div class="column">
+
+										<div class="box">
+												<div class="container" style="padding:2rem"><div style="color:white">Recargas</div>
+														<hr>
+														<div class="columns">
+																{% set a = ["Movilnet", "Movistar", "Digitel"]%}
+																{% for i in a%}
+																<div class="collumn">
+
+																		<!--------Card de servicio--------->
+																		<div class="card" id="{{i}}" style="cursor:pointer">
+																				<div class="card-image">
+																						<figure class="image">
+																								<img src="{{url_for('static', filename='img/{}.png'.format(i))}}" alt="Placeholder image">
+																						</figure>
+																				</div>
+																				<div class="card-content">
+
+																						<div class="content">
+																								{% if i in ['Movilnet', 'Movistar', 'Digitel']%}
+																								{% set arg = "Recargas"%}
+																								{% else %}
+																								{% set arg = "Cuentas" %}
+																								{% endif %}
+																								{{arg}} {{i}}<br>
+																								<a href="#">{{i}}</a>
+																								<br>
+																						</div>
+																				</div>
+																		</div>
+
+																		<!----fin---->
+
+
+																</div><hr>
+																<div class="column"></div>
+																{% endfor %}
+														</div>
+												</div>
+
+										</div>
 
 
 
-		</section>
-		<script scr="{{url_for('static', filename='js/java.js')}}"></script>
-		{% endblock %}
+										<!--								
+				  <button id="boton1" class="has-background-grey-light"><img src="{{url_for('static', filename='img/movilnet.png')}}"></button></div>
+				  <div class="column">
+				  <button id="boton2" class="has-background-grey-light"><img src="{{url_for('static', filename='img/movistar.png')}}"></button></div>
+				  <div class="column">
+				  <button id="boton3" class="has-background-grey-light"><img src="{{url_for('static', filename='img/digitel.png')}}"></button>
+										-->
+				  </div>
+						</div>
+
+
+
+				</section>
+				<script scr="{{url_for('static', filename='js/java.js')}}"></script>
+				{% endblock %}

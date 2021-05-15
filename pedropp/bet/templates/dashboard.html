@@ -8,36 +8,38 @@
 				<!--<h1>Esto es un dashboard <strong>{{user}}</strong></h1>-->
 
 				<div class="box">
-						<div class="container"><div style="color:white">Nuestros Servicios</div>
+						<div class="container" style="padding:2rem"><div style="color:white">Nuestros Servicios</div>
 								<hr>
 								<div class="columns">
 										{% set a = ["Netflix", "Disney+", "Amazon Prime", "Movilnet", "Movistar", "Digitel"]%}
 										{% for i in a%}
 										<div class="collumn">
-										
-											<!--------Card de servicio--------->
-												<div class="card" id="serv" style="cursor:pointer">
+
+												<!--------Card de servicio--------->
+												<div class="card" id="serv" style="">
 														<div class="card-image">
 																<figure class="image">
 																		<img src="{{url_for('static', filename='img/{}.png'.format(i))}}" alt="Placeholder image">
 																</figure>
 														</div>
 														<div class="card-content">
-														
+
 																<div class="content">
 																		{% if i in ['Movilnet', 'Movistar', 'Digitel']%}
 																		{% set arg = "Recargas"%}
+																		{% set link = 'rec' %}
 																		{% else %}
 																		{% set arg = "Cuentas" %}
+																		{% set link = 'cuent' %}
 																		{% endif %}
-																		{{arg}} {{i}}<br>
-																		<a href="#">{{i}}</a>
+																		{{arg}} <br>
+																		<a href="{{url_for(link, user=user)}}">{{i}}</a>
 																		<br>
 																</div>
 														</div>
 												</div>
 
-										<!----fin---->
+												<!----fin---->
 
 
 										</div><hr>
@@ -47,12 +49,25 @@
 						</div>
 
 				</div>
-				<div class="box">
-						<div class="container"><div style="color:white">Historial</div>
+				<div class="box"style="overflow:scroll;max-height:16rem">
+						<div class="container"><div style="color:white;">Historial <div class="tag is-primary" style="color:black; border-radius:25px">{{ histo|length }}</div></div>
 								<hr>
-						{% for i in histo %}
-						<div class="box" style="color:white; text-align:center">{{i[2:]}}</div>
-						{% endfor %}
+								{% for i in histo[::-1]%}
+								<div class="level is-link is-mobile" style="color:white; background-color:#303050; text-align:center; border-color:white">
+										{% for j in i[2:] %}
+										{% if "," in j|string %}
+										{% set j = j|replace(",", "<div class='level-item'>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>"|safe) %}
+										{% endif %}
+										{% if j == 1 %}
+										{% set j = "Aprobado" %}
+										{% elif j == 0 %}
+										{% set j = "Procesando" %}
+										{% endif%}
+
+										<span><div class="level-item">{{ j }}</div></span><span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+										{% endfor %}
+								</div>
+								{% endfor %}
 						</div>
 				</div>
 

@@ -155,6 +155,48 @@ def rec(user):
 
 
 
+
+@app.route('/cuentas/<user>', methods=['GET', 'POST'])
+@app.route('/cuentas', methods=['GET', 'POST'])
+def cuent(user):
+    saldo = bd.leer(user)[6]
+    if session['auth'] == 1 and  session['name'] == user:
+        if request.args.get('numero')!= None:
+            empresa = request.args.get('empresa')
+            numero = request.args.get('numero')
+            monto = request.args.get('monto')
+            rec = "{},{},{}".format(empresa,numero,monto)
+            ide = bd.leer(user)[0]
+            saldo = bd.leer(user)[6]
+            data = bd.leer(ide)
+            data = list(data)
+            if float(monto) <= float(saldo):
+                try:
+                    bd.recarga(ide, rec)
+                    data[6] = float(data[6]) - float(monto)
+                    data = tuple(data)
+                    bd.editar(ide, data)
+                    flash('recarga realizada')
+                    return redirect(url_for('cuent', user=user, saldo=saldo))
+                except:
+                    flash('Recarga Fallida')
+                    return redirect(url_for('cuent', user=user, saldo=saldo))
+            else:
+                flash('Saldo Insuficiente')
+                return redirect(url_for('cuent', user=user, saldo=saldo))
+        else:
+            return render_template('cuentas.html', user=user, saldo=saldo)
+
+    else:
+        return render_template('fail.html', error=fallas['nolog'])
+
+
+
+
+
+
+
+
 @app.route('/documentacion', methods=['GET', 'POST'])
 def doc():
     return render_template('documentacion.html')
