@@ -10,7 +10,8 @@
     <link rel="icon" href="{{ url_for('static', filename='img/betmarlogo.jpeg')}}" type="image/jpeg">
     <link href="{{ url_for('static', filename='css/css/bulma.css')}}" rel="stylesheet" type="text/css">
     <link href="{{ url_for('static', filename='css/css/ped.css')}}" rel="stylesheet" type="text/css">
-
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Pattaya&display=swap" rel="stylesheet">
     <title>{% block title %}Netflix Betmar {% endblock %}</title>
 </head>
 
@@ -39,7 +40,7 @@
 												Recargas
 										</a>
 
- <a class="navbar-item" href="{{url_for('rec', user=user)}}">
+ <a class="navbar-item" href="{{url_for('cuent', user=user)}}">
 												Cuentas
 										</a>
 

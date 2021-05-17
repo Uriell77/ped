@@ -17,7 +17,8 @@
     <link rel="icon" href="{{ url_for('static', filename='img/betmarlogo.jpeg')}}">
     <link href="{{ url_for('static', filename='css/css/bulma.css')}}" rel="stylesheet" type="text/css">
     <link href="{{ url_for('static', filename='css/css/ped.css')}}" rel="stylesheet" type="text/css">
-
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Pattaya&display=swap" rel="stylesheet">
     <title>{% block title %}Netflix Betmar {% endblock %}</title>
 </head>
 
@@ -25,8 +26,9 @@
     <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
 				<img src="{{ url_for('static', filename='img/favicon.ico')}}" style="height:4rem"></img>
-            <a class="title" href="{{url_for('hello')}}" style="color:red">Netflix Betmar</a>
-            </a>
+           <div style="padding-top:10px">
+		<a class="title" href="" style="color:red"><font face="Gabriola" size="16"><b>Netflix Betmar</b></font></a></div>
+			
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
