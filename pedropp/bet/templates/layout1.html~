@@ -18,11 +18,13 @@
 <body class="has-background-grey-light text-center" style="padding:3px; height:100%">
     <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
-<img src="{{ url_for('static', filename='img/favicon.ico')}}" style="height:4rem"></img>
-<div style="padding-top:10px">
-		<a class="title" href="" style="color:red"><font face="Gabriola" size="16"><b>Netflix Betmar</b></font></a></div>
-			
-            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+
+									<a>
+				<img src="{{ url_for('static', filename='img/favicon.ico')}}" style="height:4rem; border-radius:20px"></img>
+				</a>
+				<a style="color:red; padding-top:5px"><font style="font-family:Pattaya;" size="20">Netflix Betmar</font></a>
+	            
+<a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>

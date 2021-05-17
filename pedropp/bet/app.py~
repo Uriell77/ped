@@ -177,15 +177,15 @@ def cuent(user):
                     data = tuple(data)
                     bd.editar(ide, data)
                     flash('recarga realizada')
-                    return redirect(url_for('rec', user=user, saldo=saldo))
+                    return redirect(url_for('cuent', user=user, saldo=saldo))
                 except:
                     flash('Recarga Fallida')
-                    return redirect(url_for('rec', user=user, saldo=saldo))
+                    return redirect(url_for('cuent', user=user, saldo=saldo))
             else:
                 flash('Saldo Insuficiente')
-                return redirect(url_for('rec', user=user, saldo=saldo))
+                return redirect(url_for('cuent', user=user, saldo=saldo))
         else:
-            return render_template('recargas.html', user=user, saldo=saldo)
+            return render_template('cuentas.html', user=user, saldo=saldo)
 
     else:
         return render_template('fail.html', error=fallas['nolog'])
@@ -289,4 +289,4 @@ def ordenes():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=1)
+    app.run(host="0.0.0.0", debug=1, port=8000)
