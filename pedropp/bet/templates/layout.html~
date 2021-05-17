@@ -27,7 +27,7 @@
         <div class="navbar-brand">
 				<img src="{{ url_for('static', filename='img/favicon.ico')}}" style="height:4rem"></img>
            <div style="padding-top:10px">
-		<a class="title" href="" style="color:red"><font face="Gabriola" size="16"><b>Netflix Betmar</b></font></a></div>
+		<a class="title" href="" style="color:red; -webkit-text-stroke: 3px black;"><font face="Pattaya" size="16"><b>Netflix Betmar</b></font></a></div>
 			
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
                 <span aria-hidden="true"></span>
