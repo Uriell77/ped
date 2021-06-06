@@ -110,11 +110,10 @@ def dash(user):
     else:
         if session['auth'] == 1 and session['name'] == user:
             data = bd.leer(user)
-            histo = bd.ListaRecargas(data[0])
             #enrutado a dashboard
             #flash('Bienvenido')
 
-            return render_template('dashboard.html', user=user, saldo=data[6], histo=histo) 
+            return render_template('dashboard.html', user=user, saldo=data[6]) 
         else:
             return render_template('fail.html', error = fallas['nolog'])
 
@@ -123,6 +122,9 @@ def dash(user):
 @app.route('/recargas', methods=['GET', 'POST'])
 def rec(user):
     saldo = bd.leer(user)[6]
+    ide = bd.leer(user)[0]
+    data = bd.leer(ide)
+    histo = bd.ListaRecargas(data[0])
     if session['auth'] == 1 and  session['name'] == user:
         if request.args.get('numero')!= None:
             empresa = request.args.get('empresa')
@@ -136,19 +138,20 @@ def rec(user):
             if float(monto) <= float(saldo):
                 try:
                     bd.recarga(ide, rec)
+
                     data[6] = float(data[6]) - float(monto)
                     data = tuple(data)
                     bd.editar(ide, data)
                     flash('recarga realizada')
-                    return redirect(url_for('rec', user=user, saldo=saldo))
+                    return redirect(url_for('rec', user=user, saldo=saldo, histo=histo))
                 except:
                     flash('Recarga Fallida')
-                    return redirect(url_for('rec', user=user, saldo=saldo))
+                    return redirect(url_for('rec', user=user, saldo=saldo, histo=histo))
             else:
                 flash('Saldo Insuficiente')
-                return redirect(url_for('rec', user=user, saldo=saldo))
+                return redirect(url_for('rec', user=user, saldo=saldo, histo=histo))
         else:
-            return render_template('recargas.html', user=user, saldo=saldo)
+            return render_template('recargas.html', user=user, saldo=saldo, histo=histo)
 
     else:
         return render_template('fail.html', error=fallas['nolog'])

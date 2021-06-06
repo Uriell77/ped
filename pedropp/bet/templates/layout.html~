@@ -27,7 +27,7 @@
         <div class="navbar-brand">
 
 						<a>
-				<img src="{{ url_for('static', filename='img/favicon.ico')}}" style="height:4rem; border-radius:25px"></img>
+				<img src="{{ url_for('static', filename='img/favicon.ico')}}" style="height:4rem; border-radius:20px"></img>
 				</a>
 				<a style="color:red; padding-top:5px"><font style="font-family:Pattaya;" size="20">Netflix Betmar</font></a>
 				

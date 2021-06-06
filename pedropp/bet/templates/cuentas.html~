@@ -69,7 +69,7 @@
 																								{% set arg = "Cuentas" %}
 																								{% endif %}
 																								{{arg}} {{i}}<br>
-																								<a href="#">{{i}}</a>
+																								
 																								<br>
 																						</div>
 																				</div>

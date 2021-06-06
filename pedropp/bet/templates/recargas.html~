@@ -49,6 +49,8 @@
 												<div class="container" style="padding:2rem"><div style="color:white">Recargas</div>
 														<hr>
 														<div class="columns">
+																<div class="column"></div>
+
 																{% set a = ["Movilnet", "Movistar", "Digitel"]%}
 																{% for i in a%}
 																<div class="collumn">
@@ -69,7 +71,7 @@
 																								{% set arg = "Cuentas" %}
 																								{% endif %}
 																								{{arg}} {{i}}<br>
-																								<a href="#">{{i}}</a>
+																								
 																								<br>
 																						</div>
 																				</div>
