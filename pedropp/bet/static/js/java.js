@@ -99,12 +99,17 @@ document.addEventListener('DOMContentLoaded', () => {
     var boton = document.getElementById('boton');
     var ventana = document.getElementById('modal1');
     var ventana2 = document.getElementById('modal12');
+    var ventana3 = document.getElementById('modal13');
+
     var close = document.getElementById('del');
     var back = document.getElementById('modalback');
     var cancel = document.getElementById('cancel');
     var close2 = document.getElementById('del2');
     var back2 = document.getElementById('modalback2');
     var cancel2 = document.getElementById('cancel2');
+    var close3 = document.getElementById('del3');
+    var back3 = document.getElementById('modalback3');
+    var cancel3 = document.getElementById('cancel3');
 
     close.onclick = function() {
         ventana.classList.toggle('is-active');
@@ -129,6 +134,18 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     cancel2.onclick = function() {
         ventana2.classList.toggle('is-active');
+
+    };
+    close3.onclick = function() {
+        ventana3.classList.toggle('is-active');
+
+    };
+    back3.onclick = function() {
+        ventana3.classList.toggle('is-active');
+
+    };
+    cancel3.onclick = function() {
+        ventana3.classList.toggle('is-active');
 
     };
 });
@@ -303,6 +320,30 @@ function actu() {
         };
     });
 };
+
+
+
+
+function Clicksaldo(ident, j) {
+    //console.log(ident);
+    var cliCard = document.getElementById(ident);
+    //console.log(cliCard.childNodes[0].innerHTML.slice(6));
+    var ventana = document.getElementById('modal13');
+    ventana.classList.toggle('is-active');
+    console.log('ahora');
+    //var nom = j[1];
+    //var reca = j[3].split("\n");
+    //var reca = reca[0].split(",");
+    //var ider = document.getElementById('ider');
+    //var fecha = document.getElementById('fecha');
+    //ventana.childNodes[3].childNodes[3].innerHTML = `<div>${cliCard.childNodes[0].innerHTML.slice(6)}</div>
+    //<div>${cliCard.childNodes[1].innerHTML}</div>`;
+    //ider.value = cliCard.childNodes[0].innerHTML.slice(6);
+    //fecha.value = ident;
+    //console.log(ventana.childNodes[3].childNodes[3])
+};
+
+
 
 
 function ClickCard(ident, j) {

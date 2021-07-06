@@ -16,7 +16,52 @@
 </head>
 
 <body class="has-background-grey-light text-center" style="padding:3px; height:100%">
-    <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+    
+
+
+
+	<!-- ventana emergente para recargas-->
+		<div class="container is-clipped">
+				<div class="modal" id="modal13">
+						<div class="modal-background" id="modalback3"></div>
+						<div class="modal-card">
+								<header class="modal-card-head">
+										<p class="modal-card-title" id="modtitle">Agregar Saldo</p>
+										<button class="delete" id="del3" aria-label="close"></button>
+								</header>
+								<section class="modal-card-body">
+										<!-- Content ... -->
+
+										<div class="container" style="width:50%; height:50%; align:center">
+												<form class="form" style="align:center" id="rec" method="GET">
+														<div class="block">
+
+																<div><label class="label" for="">Numero:<br>
+																				<input class="input is-primary" type="text" name="numero"></label></div>
+																<div><label class="label" for="">Monto:<br>
+																				<input class="input is-primary" type="text" name="monto"></label></div>
+																<input class="input is-primary" type="text" id="empresa" name="empresa" style="display: none">
+
+
+																<footer class="modal-card-foot">
+																		<input class="button is-success" type="submit" value="Recargar"></input>
+																		<button class="button" id="cancel3" type="button">Cancelar</button>
+																</footer>
+
+												</form>
+														</div>
+								</section>
+										</div>
+						</div>	
+				</div>
+	
+
+
+
+
+
+
+		<nav class="navbar is-primary" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
 
 									<a>
@@ -49,8 +94,8 @@
 
             </div>
             <div class="navbar-end">
-					<div class="navbar-item">Divisa: {{saldo}}</div>
-					<div class="navbar-item">Saldo: {{saldo}}</div>
+					<div class="navbar-item tag mt-5 is-info">Divisa: {{divisa}}</div>
+					<div class="navbar-item is-clickable tag is-primary mt-5" title="Click para Agregar Saldo" id="saldoagregar" onclick="Clicksaldo(this.id, 'hola')">Saldo: {{saldo}}</div>
                 <div class="navbar-item">
                     <!-- boton desplegable-->
                     <div class="dropdown is-left" id="desplegable">
@@ -94,6 +139,11 @@
         <strong><div id="bienvenida" class="tittle">{{ message }} {{user}}</div></strong> {% endfor %}
         <!--</div>-->
     </article>
+
+
+	
+
+
     {% endif %} 
 	{% endwith %}
 
