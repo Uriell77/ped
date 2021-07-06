@@ -453,15 +453,15 @@ function limpiar() {
 
 
 function todos() {
-    loadrec('todosorden', 'http://localhost:5000/api/datos/?datos=rec');
-    loadDoc('todos', 'http://localhost:5000/api/datos/?datos=todo');
-    loadDoccont('tags', 'http://localhost:5000/api/datos/?datos=cuenta');
-    loadcuent('todosordenc', 'http://localhost:5000/api/datos/?datos=cuentas');
+    //loadrec('todosorden', 'http://localhost:5000/api/datos/?datos=rec');
+    //loadDoc('todos', 'http://localhost:5000/api/datos/?datos=todo');
+    //loadDoccont('tags', 'http://localhost:5000/api/datos/?datos=cuenta');
+    //loadcuent('todosordenc', 'http://localhost:5000/api/datos/?datos=cuentas');
 
     conectado();
 
-    //loadrec('todosorden', 'http://uriell77.pythonanywhere.com/api/datos/?datos=rec');
-    //loadDoc('todos', 'http://uriell77.pythonanywhere.com/api/datos/?datos=todo');
-    //loadDoccont('tags', 'http://uriell77.pythonanywhere.com/api/datos/?datos=cuenta');
+    loadrec('todosorden', 'http://uriell77.pythonanywhere.com/api/datos/?datos=rec');
+    loadDoc('todos', 'http://uriell77.pythonanywhere.com/api/datos/?datos=todo');
+    loadDoccont('tags', 'http://uriell77.pythonanywhere.com/api/datos/?datos=cuenta');
 
 };
