@@ -98,9 +98,14 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
     var boton = document.getElementById('boton');
     var ventana = document.getElementById('modal1');
+    var ventana2 = document.getElementById('modal12');
     var close = document.getElementById('del');
     var back = document.getElementById('modalback');
     var cancel = document.getElementById('cancel');
+    var close2 = document.getElementById('del2');
+    var back2 = document.getElementById('modalback2');
+    var cancel2 = document.getElementById('cancel2');
+
     close.onclick = function() {
         ventana.classList.toggle('is-active');
 
@@ -111,6 +116,19 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     cancel.onclick = function() {
         ventana.classList.toggle('is-active');
+
+    };
+
+    close2.onclick = function() {
+        ventana2.classList.toggle('is-active');
+
+    };
+    back2.onclick = function() {
+        ventana2.classList.toggle('is-active');
+
+    };
+    cancel2.onclick = function() {
+        ventana2.classList.toggle('is-active');
 
     };
 });
@@ -156,20 +174,41 @@ function loadDoc(div, page) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            var content = JSON.parse(this.responseText)
+            var content = JSON.parse(this.responseText);
+            //console.log(nivel);
+            //console.log(data);
             document.getElementById(div).innerHTML = '';
-            for (let item of content.slice(1)) {
-                document.getElementById(div).innerHTML += ` <div class="card has-background-dark has-text-light" id='${item[1]}'>
+            if (nivel == 1) {
+                for (let item of content.slice(1)) {
+                    document.getElementById(div).innerHTML += ` <div class="card has-background-dark has-text-light" id='${item[1]}'>
                 <div class="card-header has-background-link">
                 &nbsp${item[1]}&nbsp&nbsp&nbspSaldo:` + ' ' + item[6].toFixed(1) +
-                    `</div>
+                        `</div>
+                <div class="card-content">
+                Email: ${item[2]}<br>Conexion: ${item[4]}<br>Estatus: ${item[5]}<br>
+                VendedorID: ${item[8]}
+                </div>
+                </div>
+
+               </div><br>`;
+                    conectado();
+                }
+            } else {
+                for (let item of content.slice(1)) {
+                    if (data == item[8]) {
+                        document.getElementById(div).innerHTML += ` <div class="card has-background-dark has-text-light" id='${item[1]}'>
+                <div class="card-header has-background-link">
+                &nbsp${item[1]}&nbsp&nbsp&nbspSaldo:` + ' ' + item[6].toFixed(1) +
+                            `</div>
                 <div class="card-content">
                 Email: ${item[2]}<br>Conexion: ${item[4]}<br>Estatus: ${item[5]}
                 </div>
                 </div>
 
                </div><br>`;
-                conectado();
+                        conectado();
+                    }
+                }
             }
             //document.getElementById(div).innerHTML = ;
         }
@@ -272,6 +311,7 @@ function ClickCard(ident, j) {
     console.log(cliCard.childNodes[0].innerHTML.slice(6));
     var ventana = document.getElementById('modal1');
     ventana.classList.toggle('is-active');
+    console.log('ahora');
     //var nom = j[1];
     //var reca = j[3].split("\n");
     //var reca = reca[0].split(",");
@@ -282,6 +322,26 @@ function ClickCard(ident, j) {
     ider.value = cliCard.childNodes[0].innerHTML.slice(6);
     fecha.value = ident;
     //console.log(ventana.childNodes[3].childNodes[3])
+};
+
+
+function ClickCardcu(ident, j) {
+    //console.log(j[1]);
+    var cliCard = document.getElementById(ident);
+    console.log(cliCard.childNodes[1].innerHTML);
+    var ventana = document.getElementById('modal12');
+    ventana.classList.toggle('is-active');
+    //console.log('ahora');
+    var nom = j[1];
+    //var reca = j[3].split("\n");
+    //var reca = reca[0].split(",");
+    var ider = document.getElementById('ider2');
+    var fecha = document.getElementById('fecha2');
+    ventana.childNodes[3].childNodes[3].innerHTML = `<div>${cliCard.childNodes[0].innerHTML.slice(6)}</div>
+    <div>${cliCard.childNodes[1].innerHTML}</div>`;
+    ider.value = cliCard.childNodes[0].innerHTML.slice(6);
+    fecha.value = ident;
+    //console.log(cliCard.childNodes[0].innerHTML)
 
 };
 
@@ -294,13 +354,42 @@ function loadrec(div, page) {
             var content = JSON.parse(this.responseText)
             document.getElementById(div).innerHTML = '';
             for (item of content) {
-                if (item[4] == 0) {
+                if (item[4] == 0 && item[5] == data) {
                     var ord = item[3].split(',');
                     document.getElementById(div).innerHTML += `<div class="card has-background-dark has-text-light" id="${item[2]}" onclick="ClickCard(this.id,item)
                 "><div class="card-header has-background-link">&nbsp${item[1]}</div><div class="card-content" style="cursor:pointer">
                     Fecha: ${item[2]}<br>Orden:<br>&nbsp&nbsp&nbsp
                                      Empresa: ${ord[0]}<br>&nbsp&nbsp&nbspNumero: ${ord[1]}<br>&nbsp&nbsp&nbspMonto:
                 ${ord[2]}
+                             </div>
+                      </div><br>
+             </div>`
+                };
+            }
+            //document.getElementById(div).innerHTML = ;
+        }
+    };
+    xhttp.open("GET", page, true);
+    xhttp.send();
+};
+
+
+//Ajax carga listado de cuentas
+function loadcuent(div, page) {
+    //console.log('se ejecuta');
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var content = JSON.parse(this.responseText)
+            document.getElementById(div).innerHTML = '';
+            for (item of content) {
+                if (item[5] == 0 && item[7] == data) {
+                    var ord = item[3].split(',');
+                    document.getElementById(div).innerHTML += `<div class="card has-background-dark has-text-light" id="${item[2]}" onclick="ClickCardcu(this.id,item)
+                "><div class="card-header has-background-link">&nbsp${item[1]}</div><div class="card-content" style="cursor:pointer">
+                    Fecha: ${item[2]}<br>Orden:<br>&nbsp&nbsp&nbsp
+                                     Orden: ${item[3]}<br>&nbsp&nbsp&nbspCant: ${item[4]}<br>&nbsp&nbsp&nbspFecha de Corte:
+                ${item[6]}
                              </div>
                       </div><br>
              </div>`
@@ -323,14 +412,15 @@ function limpiar() {
 
 
 function todos() {
-    //loadrec('todosorden', 'http://localhost:5000/api/datos/?datos=rec');
-    //loadDoc('todos', 'http://localhost:5000/api/datos/?datos=todo');
-    //loadDoccont('tags', 'http://localhost:5000/api/datos/?datos=cuenta');
+    loadrec('todosorden', 'http://localhost:5000/api/datos/?datos=rec');
+    loadDoc('todos', 'http://localhost:5000/api/datos/?datos=todo');
+    loadDoccont('tags', 'http://localhost:5000/api/datos/?datos=cuenta');
+    loadcuent('todosordenc', 'http://localhost:5000/api/datos/?datos=cuentas');
 
     conectado();
 
-    loadrec('todosorden', 'http://uriell77.pythonanywhere.com/api/datos/?datos=rec');
-    loadDoc('todos', 'http://uriell77.pythonanywhere.com/api/datos/?datos=todo');
-    loadDoccont('tags', 'http://uriell77.pythonanywhere.com/api/datos/?datos=cuenta');
+    //loadrec('todosorden', 'http://uriell77.pythonanywhere.com/api/datos/?datos=rec');
+    //loadDoc('todos', 'http://uriell77.pythonanywhere.com/api/datos/?datos=todo');
+    //loadDoccont('tags', 'http://uriell77.pythonanywhere.com/api/datos/?datos=cuenta');
 
 };

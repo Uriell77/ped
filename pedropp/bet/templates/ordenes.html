@@ -15,7 +15,7 @@
 	<form id="confirma" method="POST">
 			<input type="text" id="ider" style="display: none" name="ider"></input>
 			<input type="text" id="fecha" style="display: none" name="fecha"></input>
-			<input type="submit" class="button is-success" value="Confirmar"></button>
+			<input type="submit" class="button is-success" name="recargas" value="Confirmar"></button>
 	</form>
     <button class="button" id="cancel">Cancel</button>
     </footer>
@@ -25,7 +25,7 @@
 
 <div id="todosorden">
 		{% for j in lorden %}
-		{% if j[4] == 0 %}
+		{% if j[4] == 0  and j[5] == data[0] %}
 
 		<div class="card has-background-dark has-text-light" id='{{j[2]}}' onclick="ClickCard(this.id, j)">
 				<div class="card-header has-background-link">
@@ -42,6 +42,7 @@
 </div>
 
 		<script>
+				
 				//setInterval("loadrec('todosorden', 'http://uriell77.pythonanywhere.com/api/datos/?datos=rec')",7000);
 				//setInterval("loadrec('todosorden', 'http://localhost:5000/api/datos/?datos=rec')",2000);
 

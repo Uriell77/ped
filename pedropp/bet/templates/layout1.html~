@@ -33,10 +33,10 @@
         <div id="navbarBasicExample" class="navbar-menu">
             <div class="navbar-start">
 
-                {% if user == 'admin' %} {% set panel = 'layad' %} {% else %} {% set panel = 'dash' %} {% endif %}
+                {% if paneldic == 1 or paneldic == 2 %} {% set panel = 'layad' %} {% else %} {% set panel = 'dash' %} {% endif %}
 
                 <a class="navbar-item" href="{{url_for(panel, user=user)}}">
-												Panel de Control
+						Panel de Control
 										</a>
                 <a class="navbar-item" href="{{url_for('rec', user=user)}}">
 												Recargas
@@ -49,6 +49,7 @@
 
             </div>
             <div class="navbar-end">
+					<div class="navbar-item">Divisa: {{saldo}}</div>
 					<div class="navbar-item">Saldo: {{saldo}}</div>
                 <div class="navbar-item">
                     <!-- boton desplegable-->

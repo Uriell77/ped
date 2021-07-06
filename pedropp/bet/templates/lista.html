@@ -1,6 +1,7 @@
 {% block lista %}
 
 <div id="todos">
+{% if paneldic == 1 %}
 {%for i in plantilla[1:]%}
 <div class="card has-background-dark has-text-light" id='{{ i[1]}}'>
 		<div class="card-header has-background-link">
@@ -11,12 +12,30 @@
 		</div>
 </div><br>
 {%endfor%}
+
+{% else %}
+{%for i in plantilla[1:]%}
+{% if data[0] == i[8] %}
+<div class="card has-background-dark has-text-light" id='{{ i[1]}}'>
+		<div class="card-header has-background-link">
+				&nbsp{{i[1]}}&nbsp&nbsp&nbspSaldo: {{i[6]}}
+		</div>
+		<div class="card-content">
+				Email: {{i[2]}}<br>Conexion: {{i[4]}}<br>Estatus: {{i[5]}}
+		</div>
+</div><br>
+{% endif %}
+{%endfor%}
+
+{%endif%}
 </div>
 
 
 <script src="{{ url_for('static', filename='js/java.js' )}}"></script>
 
 <script>
+		var nivel= {{paneldic|safe}};
+		var data = {{data[0]}};
 		//setInterval('conectado()', 5000);
 		//setInterval("loadDoc('todos', http://uriell77.pythonanywhere.com/api/datos/?datos=todo)",5000);
 		//setInterval("loadDoccont('tags', 'http://uriell77.pythonanywhere.com/api/datos/?datos=cuenta')",6000);

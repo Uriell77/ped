@@ -22,7 +22,6 @@ def session_manager():
     session.permanent = True
     #app.permanent_session_lifetime = timedelta(minutes=10)
 
-
 @app.route('/')
 def hello():
     #enrutado a pagina inicial
@@ -56,10 +55,13 @@ def log():
             try:
                 if bd.existe(datos):
                     plantilla = bd.leertodo()
-                    if nombre== str(plantilla[0][1]) and password == str(plantilla[0][3]):
+                    global data
+                    data = bd.leer(nombre)
+                    if nombre == str(data[1]) and password == str(data[3]) and (data[7]==1 or data[7] == 2):
                         session['auth'] = 1
                         flash('Bienvenido')
-                        return redirect(url_for('layad', user=nombre))
+                        bd.log(str(nombre))
+                        return redirect(url_for('layad', user=nombre, data=data))
                     else:
                         session['auth'] = 1
                         #flash("te haz logeado correctamente")
@@ -104,6 +106,7 @@ def reg():
 
 @app.route('/dashboard/<user>',  methods=['GET', 'POST'])
 def dash(user):
+    datav = bd.leer(bd.leer(user)[8])
     plantilla = bd.leertodo()
     if user == plantilla[0][1]:
         return render_template('fail.html', error=fallas['noacces'])
@@ -113,7 +116,7 @@ def dash(user):
             #enrutado a dashboard
             #flash('Bienvenido')
 
-            return render_template('dashboard.html', user=user, saldo=data[6]) 
+            return render_template('dashboard.html', user=user, saldo=data[6], divisa=datav[9]) 
         else:
             return render_template('fail.html', error = fallas['nolog'])
 
@@ -124,6 +127,7 @@ def rec(user):
     saldo = bd.leer(user)[6]
     ide = bd.leer(user)[0]
     data = bd.leer(ide)
+    datav = bd.leer(data[8])
     histo = bd.ListaRecargas(data[0])
     if session['auth'] == 1 and  session['name'] == user:
         if request.args.get('numero')!= None:
@@ -143,15 +147,15 @@ def rec(user):
                     data = tuple(data)
                     bd.editar(ide, data)
                     flash('recarga realizada')
-                    return redirect(url_for('rec', user=user, saldo=saldo, histo=histo))
+                    return redirect(url_for('rec', user=user, saldo=saldo, histo=histo, paneldic=data[7], divisa=datav[9]))
                 except:
                     flash('Recarga Fallida')
-                    return redirect(url_for('rec', user=user, saldo=saldo, histo=histo))
+                    return redirect(url_for('rec', user=user, saldo=saldo, histo=histo, paneldic=data[7], divisa=datav[9]))
             else:
                 flash('Saldo Insuficiente')
-                return redirect(url_for('rec', user=user, saldo=saldo, histo=histo))
+                return redirect(url_for('rec', user=user, saldo=saldo, histo=histo, paneldic=data[7], divisa=datav[9]))
         else:
-            return render_template('recargas.html', user=user, saldo=saldo, histo=histo)
+            return render_template('recargas.html', user=user, saldo=saldo, histo=histo, paneldic=data[7], divisa=datav[9])
 
     else:
         return render_template('fail.html', error=fallas['nolog'])
@@ -162,33 +166,36 @@ def rec(user):
 @app.route('/cuentas/<user>', methods=['GET', 'POST'])
 @app.route('/cuentas', methods=['GET', 'POST'])
 def cuent(user):
+    data = bd.leer(user)
     saldo = bd.leer(user)[6]
+    histo = bd.ListaCuentas(data[0])
+    datav = bd.leer(data[8])
     if session['auth'] == 1 and  session['name'] == user:
         if request.args.get('numero')!= None:
             empresa = request.args.get('empresa')
             numero = request.args.get('numero')
-            monto = request.args.get('monto')
-            rec = "{},{},{}".format(empresa,numero,monto)
             ide = bd.leer(user)[0]
             saldo = bd.leer(user)[6]
             data = bd.leer(ide)
             data = list(data)
+            monto = bd.leer_serv(empresa)
+            monto = monto[2] * numero
             if float(monto) <= float(saldo):
                 try:
-                    bd.recarga(ide, rec)
+                    bd.cuentas(ide, numero, empresa)
                     data[6] = float(data[6]) - float(monto)
                     data = tuple(data)
                     bd.editar(ide, data)
-                    flash('recarga realizada')
-                    return redirect(url_for('cuent', user=user, saldo=saldo))
+                    flash('Pantallas Solicitadas')
+                    return redirect(url_for('cuent', user=user, saldo=saldo, panedic=data[7], histo=histo, divisa=datav[9]))
                 except:
                     flash('Recarga Fallida')
-                    return redirect(url_for('cuent', user=user, saldo=saldo))
+                    return redirect(url_for('cuent', user=user, saldo=saldo, paneldic=data[7], histo=histo, divisa=datav[9]))
             else:
                 flash('Saldo Insuficiente')
-                return redirect(url_for('cuent', user=user, saldo=saldo))
+                return redirect(url_for('cuent', user=user, saldo=saldo, paneldic=data[7], histo=histo, divisa=datav[9]))
         else:
-            return render_template('cuentas.html', user=user, saldo=saldo)
+            return render_template('cuentas.html', user=user, saldo=saldo, paneldic=data[7], histo=histo, divisa=datav[9])
 
     else:
         return render_template('fail.html', error=fallas['nolog'])
@@ -212,24 +219,31 @@ def layad(user):
     plantilla = bd.leertodo()
     lorden = bd.todarecarga()
     data = bd.leer(user)
-    if user != plantilla[0][1]:
+    datav = bd.leer(data[8])
+    
+    if data[7] > 2 :
         return render_template('fail.html', error=fallas['noacces'])
     else:
-        if session['auth'] == 1 and session['name'] == str(plantilla[0][1]):
+        if session['auth'] == 1 and session['name'] == str(data[1]):
             #flash('Bienvvenido')
-            if request.method == 'POST' and request.form['ider']!='None':
-                ider = request.form['ider']
-                fecha = request.form['fecha']
-                ider = ider.rstrip()
-                bd.delrec(ider, fecha)
+            if request.method == 'POST':
+                accion = request.form
+                if accion['recargas'] == 'Confirmar':
+                    ider = request.form['ider']
+                    fecha = request.form['fecha']
+                    ider = ider.rstrip()
+                    bd.delrec(ider, fecha)
+                    flash('Recarga  {0} {1} Aprobada'.format(ider, fecha))
+                    return render_template('dashboard1.html', user=user, plantilla=plantilla, cuenta=cuenta, lorden=lorden, saldo=data[6], paneldic=data[7], data=data, divisa=datav[9])
+                else:
+                    ider = request.form['ider2']
+                    fecha = request.form['fecha2']
+                    ider = ider.rstrip()
+                    bd.delcuent(ider, fecha)
+                    flash('Cuenta  {0} {1} Aprobada'.format(ider, fecha))
+                    return render_template('dashboard1.html', user=user, plantilla=plantilla, cuenta=cuenta, lorden=lorden, saldo=data[6], paneldic=data[7], data=data, divisa=datav[9])
+            return render_template('dashboard1.html', user=user, plantilla=plantilla, cuenta=cuenta, lorden=lorden, saldo=data[6], paneldic=data[7], data=data, divisa=datav[9])
 
-                flash('Recarga  {0} {1} Aprobada'.format(ider, fecha))
-                return render_template('dashboard1.html', user=user, plantilla=plantilla, cuenta=cuenta, lorden=lorden, saldo=data[6])
-            else:
-                #flash('nada')
-                return render_template('dashboard1.html', user=user, plantilla=plantilla, cuenta=cuenta, lorden=lorden, saldo=data[6])
-
-            return render_template('dashboard1.html', user=user, plantilla=plantilla, cuenta=cuenta, lorden=lorden, saldo=data[6])
         else:
             return render_template('fail.html', error=fallas['noacces'])
 
@@ -267,6 +281,9 @@ def json():
     elif datos == 'rec':
         datos = bd.todarecarga()
         return jsonify(datos)
+    elif datos == 'cuentas':
+        datos = bd.todacuenta()
+        return jsonify(datos)
     return "Api de datos"
 
 
@@ -274,8 +291,9 @@ def json():
 
 @app.route('/lista')
 def lista():
+    data = bd.leer(user)
     plantilla = bd.leertodo()
-    lorden = bd.todarecarca()
+    lorden = bd.todarecarga()
     return render_template('lista.html', plantilla = plantilla)
 
 
@@ -283,13 +301,36 @@ def lista():
 def ordenes():
     if request.method == 'GET':
         lorden = bd.todarecarga()
-        return render_template('ordenes.html', lorden=lorden)
+        data = bd.leer(user)
+        return render_template('ordenes.html', lorden=lorden, data=data)
+    #else:
+     #   ider = request.form['ider']
+      #  fecha = request.form['fecha']
+       # ider = ider.rstrip()
+       # bd.delrec(ider, fecha)
+       # flash('Recarga  {0} {1} Aprobada'.format(ider, fecha))
+       # return redirect(url_for('layad'))
+             
     #else:
      #   lorden = bd.todarecarga()
       #  ider = request.form['ider']
        # fecha = request.form['fecha']
-        #return ider,fecha
+        #retuurn ider,fecha
 
 
-#if __name__ == '__main__':
-#    app.run(host="0.0.0.0", debug=1, port=8000)
+
+
+@app.route('/ordenesc', methods=['GET', 'POST'])
+def ordenesc():
+    if request.method == 'GET':
+        lorden = bd.todacuenta()
+        data = bd.leer(user)
+        return render_template('ordenesc.html', lorden2=lorden, data=data)
+   # f request.method == 'POST':
+    #    ider = request.form['ider2']
+     #   fecha = request.form['fecha2']
+      #  ider = ider.rstrip()
+       # bd.delcuent(ider, fecha)
+        #flash('cuenta  {0} {1} Aprobada'.format(ider, fecha))
+       # return render_template('dashboard1.html', user=user, plantilla=plantilla, cuenta=cuenta, lorden=lorden, saldo=data[6], paneldic=data[7], data=data)
+

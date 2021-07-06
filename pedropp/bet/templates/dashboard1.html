@@ -41,7 +41,7 @@
   <ul id="tabs">
     <li class="tab is-active" onclick="openTab(event, 'clientes')"><a>Clientes</a></li>
     <li class="tab" onclick="openTab(event, 'recargas')"><a>Recargas</a></li>
-    <li class="tab" onclick="openTab(event, 'netflix')"><a>Netflix</a></li>
+    <li class="tab" onclick="openTab(event, 'netflix')"><a>Cuentas</a></li>
     <li class="tab" onclick="openTab(event, 'administracion')"><a>Administracion</a></li>
   </ul>
 </div>
@@ -79,8 +79,11 @@
 
 				<div id="netflix" class="box content-tab"style="display:none">
 						<strong>Cuentas:</strong>
-						<div></div><br>
-
+						<div id=ordenc><br>
+								{% include "ordenesc.html"%}
+								{% block ordenesc %}
+								{% endblock %}
+						</div>
 						</div>
 
 						

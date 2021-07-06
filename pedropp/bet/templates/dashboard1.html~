@@ -79,8 +79,11 @@
 
 				<div id="netflix" class="box content-tab"style="display:none">
 						<strong>Cuentas:</strong>
-						<div></div><br>
-
+						<div id=ordenc><br>
+								{% include "ordenesc.html"%}
+								{% block ordenesc %}
+								{% endblock %}
+						</div>
 						</div>
 
 						

@@ -95,7 +95,7 @@
 								<hr>
 								{% for i in histo[::-1]%}
 								<div class="level is-link is-mobile" style="color:white; background-color:#303050; text-align:center; border-color:white">
-										{% for j in i[2:] %}
+										{% for j in i[2:-1] %}
 										{% if "," in j|string %}
 										{% set j = j|replace(",", "<div class='level-item'>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>"|safe) %}
 										{% endif %}

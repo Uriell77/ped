@@ -1,0 +1,52 @@
+{% block ordenesc %}
+
+
+<div class="modal" id="modal12">
+		<div class="modal-background" id="modalback2"></div>
+		<div class="modal-card">
+				<header class="modal-card-head">
+						<p class="modal-card-title">Orden</p>
+						<button class="delete" id="del2" aria-label="close"></button>
+				</header>
+				<section class="modal-card-body">
+
+				</section>
+				<footer class="modal-card-foot">
+						<form id="confirma" method="POST">
+								<input type="text" id="ider2" style="display: none" name="ider2"></input>
+								<input type="text" id="fecha2" style="display: none" name="fecha2"></input>
+								<input type="submit" class="button is-success" name="recargas" value="Asignar"></button>
+						</form>
+						<button class="button" id="cancel2">Cancel</button>
+				</footer>
+		</div>
+</div>
+
+
+<div id="todosordenc">
+		{% for j in lorden2 %}
+
+		{% if j[5] == 0  and j[7] == data[0] %}
+
+		<div class="card has-background-dark has-text-light" id='{{j[2]}}' onclick="ClickCardcu(this.id, j)">
+				<div class="card-header has-background-link">
+						&nbsp{{j[1]}}&nbsp&nbsp&nbsp
+				</div>
+				<div class="card-content">
+						{#{% set ord = j[3].split(',') %}#}
+						Fecha: {{j[2]}}<br>Orden:<br>&nbsp&nbsp&nbsp
+						orden: {{j[3]}}<br>&nbsp&nbsp&nbspcant: {{j[4]}}<br>&nbsp&nbsp&nbspFecha de corte: {{j[6]}}
+				</div>
+		</div><br>
+		{% endif %}
+		{%endfor%}
+</div>
+
+<script>
+
+		//setInterval("loadrec('todosorden', 'http://uriell77.pythonanywhere.com/api/datos/?datos=rec')",7000);
+		//setInterval("loadrec('todosorden', 'http://localhost:5000/api/datos/?datos=rec')",2000);
+
+</script>
+
+{% endblock %}

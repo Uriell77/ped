@@ -119,7 +119,7 @@ def recarga(id, ordenu):
 
     datosu = leer(id)
     time = str(datetime.datetime.now())
-    cursor.execute("INSERT INTO recargas(id,nombre,time,orden) VALUES ('{0}', '{1}', '{2}', '{3}')".format(datosu[0], datosu[1], time[:time.index('.')], ordenu))
+    cursor.execute("INSERT INTO recargas(id,nombre,time,orden, vendedor) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}')".format(datosu[0], datosu[1], time[:time.index('.')], ordenu, datosu[8]))
     base.commit()
     base.close()
 
@@ -159,9 +159,71 @@ def delrec(ide, fech):
     #borra un registo de la base de datos recargas por la fecha
     base = sqlite3.connect('user.db', check_same_thread=False)
     cursor = base.cursor()
-    try:
-        cursor.execute("UPDATE recargas SET status = '{2}' WHERE nombre = '{0}' AND time = '{1}'".format(ide, fech, '1'))
-    except:
-        print('no se pudo')
+    cursor.execute("UPDATE recargas SET status = '{2}' WHERE nombre = '{0}' AND time = '{1}'".format(ide, fech, '1'))
     base.commit()
     base.close()
+
+
+
+
+def ListaCuentas(id):
+    """Consulta la lista de cuentass en bd de un usuario por medio del id"""
+
+    base = sqlite3.connect('user.db', check_same_thread=False)
+    cursor = base.cursor()
+
+    datosu = leer(id)
+    cursor.execute("SELECT * FROM cuentas WHERE id = {}".format(id))
+
+    res = cursor.fetchall()
+    base.close()
+    return res
+
+
+def todacuenta():
+    '''retorna toda la bd de cuentas'''
+    base = sqlite3.connect('user.db', check_same_thread=False)
+    cursor = base.cursor()
+
+    cursor.execute("SELECT * FROM cuentas")
+    respuesta = cursor.fetchall()
+    base.close()
+    return respuesta
+
+
+def cuentas(id, pantallas, empresa):
+    """para agregar una compra de pantallas en base de datos, la pantallas es la cantidad de pantallas a comprar y empresa es la empresa de streaming a comprar
+    """
+    base = sqlite3.connect('user.db', check_same_thread=False)
+    cursor = base.cursor()
+
+    datosu = leer(id)
+    time = datetime.datetime.now()
+    fcorte = str(time + datetime.timedelta(days=30))
+    print(fcorte)
+    cursor.execute("INSERT INTO cuentas(id,nombre,time,orden, cantidad, fcorte, vendedor) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}')".format(datosu[0], datosu[1], str(time)[:str(time).index('.')], empresa, pantallas, fcorte[:fcorte.index('.')], datosu[8]))
+    base.commit()
+    base.close()
+
+
+
+def delcuent(ide, fech):
+    #borra un registo de la base de datos cuenta por la fecha
+    base = sqlite3.connect('user.db', check_same_thread=False)
+    cursor = base.cursor()
+    cursor.execute("UPDATE cuentas SET status = '{2}' WHERE nombre = '{0}' AND time = '{1}'".format(ide, fech, '1'))
+    base.commit()
+    base.close()
+
+
+def leer_serv(dato):
+    #busca servicio por nombre o id
+    base = sqlite3.connect('user.db', check_same_thread=False)
+    cursor = base.cursor()
+
+    cursor.execute("SELECT * FROM servicios WHERE id = ? OR nombre = ?", (dato, dato))
+    respuesta = cursor.fetchone()
+    base.close()
+    return respuesta
+
+
